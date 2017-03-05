@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.thanglv.nlp.nlp.adapter.StoryAdapter;
+import com.thanglv.nlp.nlp.customize.CustomActionBar;
 import com.thanglv.nlp.nlp.model.Story;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Story> stories;
     private String [] listTitleStory;
     private StoryAdapter adapter;
+    private CustomActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        actionBar = new CustomActionBar();
+        actionBar.eventToolbar(this, "Truyện Kim Dung");
         listStory = (RecyclerView) findViewById(R.id.listStory);
         stories = new ArrayList<>();
 
@@ -40,12 +44,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < listTitleStory.length; i ++) {
             Story truyen = new Story(listTitleStory[i]);
             stories.add(truyen);
-            Log.d("title", "init: " + stories.get(i).getTitle());
+            Log.d("title", " " + stories.get(i).getTitle());
         }
         adapter = new StoryAdapter(MainActivity.this, stories);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         listStory.setLayoutManager(mLinearLayoutManager);
         listStory.setAdapter(adapter);
-
     }
 }

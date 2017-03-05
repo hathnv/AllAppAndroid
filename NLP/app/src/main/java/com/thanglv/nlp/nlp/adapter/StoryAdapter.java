@@ -2,6 +2,7 @@ package com.thanglv.nlp.nlp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.thanglv.nlp.nlp.ListChapter;
 import com.thanglv.nlp.nlp.R;
 import com.thanglv.nlp.nlp.model.Story;
 
@@ -65,21 +67,20 @@ public class StoryAdapter extends RecyclerView.Adapter {
 
         private TextView name;
         private ImageView imgNext;
-        private RelativeLayout layout;
 
         public StoryHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.nameStory);
             imgNext = (ImageView) itemView.findViewById(R.id.imgNext);
-            layout = (RelativeLayout) itemView.findViewById(R.id.layout_item_story);
-
-            layout.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if(view == layout){
-
+            if(view == itemView){
+                Intent intent = new Intent(activity, ListChapter.class);
+                intent.putExtra("titleStory", stories.get(getAdapterPosition()).getTitle());
+                activity.startActivity(intent);
             }
         }
     }

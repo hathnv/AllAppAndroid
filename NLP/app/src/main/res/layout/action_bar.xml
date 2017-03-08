@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -46,8 +46,13 @@
             android:focusableInTouchMode="true"
             android:scrollHorizontally="true"
             android:text="Toolbar"
-            android:textColor="@color/red"
-            android:textSize="18sp" />
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="2"
+            android:shadowDy="10"
+            android:textStyle="bold"
+            android:shadowRadius="50"
+            android:textColor="#000"
+            android:textSize="30sp" />
     </RelativeLayout>
 
     <View

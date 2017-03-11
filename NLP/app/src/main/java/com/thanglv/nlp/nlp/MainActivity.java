@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         actionBar = new CustomActionBar();
-        actionBar.eventToolbar(this, "Truyện Kim Dung");
+        actionBar.eventToolbar(this, "Truyện Kim Dung", false);
         listStory = (RecyclerView) findViewById(R.id.listStory);
         stories = new ArrayList<>();
 

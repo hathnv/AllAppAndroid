@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.thanglv.nlp.nlp.customize.CustomActionBar;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +15,7 @@ import java.io.InputStreamReader;
 public class ViewReading extends AppCompatActivity {
     private TextView tvReading;
     private String titleChapter, titleStory, detailReading;
+    private CustomActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,9 @@ public class ViewReading extends AppCompatActivity {
         titleStory = getIntent().getStringExtra("titleStory");
     }
     private void init(){
+        actionBar = new CustomActionBar();
+        actionBar.eventToolbar(this, titleChapter, true);
+
         tvReading = (TextView) findViewById(R.id.tvDetailReading);
         AssetManager assetManager = getAssets();
         detailReading = readFileAsset(assetManager, "data/" + titleStory + "/" + titleChapter + ".txt");

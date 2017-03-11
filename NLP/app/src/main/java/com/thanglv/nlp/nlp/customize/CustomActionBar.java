@@ -12,16 +12,22 @@ import com.thanglv.nlp.nlp.R;
  */
 
 public class CustomActionBar implements View.OnClickListener{
-    private View imBack;
+    private View imBack, imSearch;
     private TextView tvToolbar;
     private Activity activity;
 
-    public void eventToolbar(Activity activity, String text) {
+    public void eventToolbar(Activity activity, String text, boolean hasSearch) {
         this.activity = activity;
         imBack = activity.findViewById(R.id.imBack);
+        imSearch = activity.findViewById(R.id.imSearch);
         tvToolbar = (TextView) activity.findViewById(R.id.tvToolbar);
 
         tvToolbar.setText(text);
+        if(hasSearch) {
+            imSearch.setVisibility(View.VISIBLE);
+        }else {
+            imSearch.setVisibility(View.GONE);
+        }
         imBack.setOnClickListener(this);
     }
 

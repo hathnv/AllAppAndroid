@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,8 +19,8 @@
             android:layout_marginLeft="10dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_img_circle" />
 
@@ -46,13 +46,18 @@
             android:focusableInTouchMode="true"
             android:scrollHorizontally="true"
             android:text="Toolbar"
-            android:shadowColor="#FFFFFF"
-            android:shadowDx="2"
-            android:shadowDy="10"
-            android:textStyle="bold"
-            android:shadowRadius="50"
-            android:textColor="#000"
-            android:textSize="30sp" />
+            android:textColor="@color/red"
+            android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/imSearch"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/search"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            />
     </RelativeLayout>
 
     <View

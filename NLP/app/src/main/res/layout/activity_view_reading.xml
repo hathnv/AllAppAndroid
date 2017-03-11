@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_view_reading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context="com.thanglv.nlp.nlp.ViewReading">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
 
     <include layout="@layout/action_bar" />
 
@@ -30,5 +33,10 @@
 
         </LinearLayout>
     </ScrollView>
+    </RelativeLayout>
 
-</RelativeLayout>
+    <include
+        android:id="@+id/view_dialog"
+        layout="@layout/view_dialog_search"/>
+
+</FrameLayout>

@@ -35,7 +35,7 @@ public class ListChapter extends AppCompatActivity {
     }
     private void init(){
         actionBar = new CustomActionBar();
-        actionBar.eventToolbar(this, titleStory);
+        actionBar.eventToolbar(this, titleStory, false);
         listChapter = (RecyclerView) findViewById(R.id.list_chapter);
         chapters = new ArrayList<>();
 

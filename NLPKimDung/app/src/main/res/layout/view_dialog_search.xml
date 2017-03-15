@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:background="#8000">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_marginTop="160dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="180dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:padding="16dp"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/bg_dialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,7 +20,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:gravity="center"
-            android:layout_height="30dp">
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_height="60dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -28,41 +32,27 @@
                 android:textSize="18sp"
                 android:textColor="#000" />
 
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
-
-            </Spinner>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_height="30dp">
-
             <TextView
+                android:id="@+id/tvStory"
+                android:background="#FBBFAB"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Chương"
                 android:textSize="18sp"
-                android:textColor="#000" />
-
-            <Spinner
-                android:layout_width="0dp"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_weight="2"
                 android:layout_height="match_parent">
 
-            </Spinner>
+            </TextView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_height="30dp">
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_height="60dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -73,6 +63,8 @@
                 android:textColor="#000" />
 
             <EditText
+                android:id="@+id/edPassage"
+                android:background="#FBBFAB"
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="match_parent">
@@ -80,24 +72,40 @@
             </EditText>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/layout_search_voice"
+            android:layout_gravity="center"
+            android:layout_width="60dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_height="60dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/microphone"/>
+        </LinearLayout>
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
+                android:id="@+id/btnSearch"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:text="Tìm kiếm"
+                android:clickable="true"
                 android:textAllCaps="false"
                 android:background="@drawable/bg_btn"/>
             <Button
+                android:id="@+id/btnCancel"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="Thoát"
+                android:clickable="true"
                 android:textAllCaps="false"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
@@ -107,4 +115,4 @@
 
 
 
-</LinearLayout>
+</ScrollView>

@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_view_reading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ViewReading">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="match_parent">
-
-    <include layout="@layout/action_bar" />
-
-    <ScrollView
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:background="@color/white">
 
-        <LinearLayout
+        <include layout="@layout/action_bar" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="60dp">
 
-            <TextView
-                android:id="@+id/tvDetailReading"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:textSize="18sp"
-                android:text="111"
-                android:textColor="#000" />
+                <TextView
+                    android:id="@+id/tvDetailReading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp"
+                    android:text="111"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
+        </ScrollView>
 
-        </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/tvNameStory"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:text="name"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:background="#FBBFAB" />
     </RelativeLayout>
+
     <Button
         android:id="@+id/btnShowErr"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
         android:layout_marginRight="20dp"
+        android:background="@drawable/fab_button"
+        android:fontFamily="sans-serif"
         android:shadowColor="@color/white"
-        android:shadowRadius="4"
-        android:shadowDy="1"
         android:shadowDx="1"
-        android:text="Text"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/fab_button"/>
+        android:shadowDy="1"
+        android:shadowRadius="4"
+        android:text="Lỗi"
+        android:textAllCaps="false"
+        android:textSize="18sp" />
 
     <include
-        android:visibility="gone"
         android:id="@+id/view_dialog"
-        layout="@layout/view_dialog_search"/>
+        layout="@layout/view_dialog_search"
+        android:visibility="gone" />
 
 </FrameLayout>

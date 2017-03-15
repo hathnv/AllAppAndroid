@@ -28,5 +28,13 @@
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </RelativeLayout>
+    <include
+        android:id="@+id/view_dialog_search"
+        layout="@layout/view_dialog_search"
+        android:visibility="gone" />
+    <include
+        android:id="@+id/view_result_search"
+        layout="@layout/view_result_search"
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -1,8 +1,7 @@
 package com.hust.thanglv.nlpkimdung.rules;
 
-/**
- * Created by giang on 11/30/2016.
- */
+
+import com.hust.thanglv.nlpkimdung.model.NguyenAmCoDau;
 
 public class Rule1 extends Rule{
 	/*
@@ -13,11 +12,12 @@ public class Rule1 extends Rule{
 
     @Override
     public boolean checkInvalidate(String x) {
-        String notInVietNamese = "!@#$%^&*(){}?/'\'|=+[]<>wfjz0123456789";
+        String inVietNamese = "bcdđghklmnpqrstvx" + "aăâeêoôơuưiy"
+                + NguyenAmCoDau.getInstance().codau;
         if (x.equals("")) return true;
         x = x.toLowerCase();
         for (int i = 0; i < x.length(); i++) {
-            if (notInVietNamese.contains("" + x.charAt(i))) {
+            if (!inVietNamese.contains("" + x.charAt(i))) {
                 return true;
             }
         }

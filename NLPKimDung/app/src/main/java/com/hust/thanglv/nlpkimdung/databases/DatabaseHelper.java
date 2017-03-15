@@ -33,6 +33,10 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
     }
 
+    /**
+     * Lấy danh sách truyện
+     * @return list truyện trong db
+     */
     public ArrayList<Story> getListStory() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         ArrayList<Story> stories = new ArrayList<>();
@@ -48,6 +52,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return stories;
     }
 
+    /**
+     * Lấy danh sách chương của truyện
+     * @param id id định danh của truyện
+     * @return danh sách các chương của truyện có id tương ứng
+     */
     public ArrayList<Chapter> getListChapter(int id){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         ArrayList<Chapter> chapters = new ArrayList<>();

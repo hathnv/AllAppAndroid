@@ -53,17 +53,19 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
     private TextView tvReading;
     private String titleChapter, detailReadingHtml, detailReading;
     private CustomActionBar actionBar;
-    private Button showErr;
+    private Button showErr, btnOK, btnDetail;
     private List<Rule> listRule;
     private String errorWords = "";
-    private List<String> lsError = new ArrayList<>();
+    private List<String> lsError;
     private SplitText splitText;
-    private List<String> listText = new ArrayList<>();
+    private List<String> listText;
     private int numOfErr = 0;
     private ViewDialogForNotification notification;
-    private TextView tvNameStory;
+    private TextView tvNameStory, tvDetailErr;
     private ScrollView scrollView;
     private final DisplayMetrics dm = new DisplayMetrics();
+    private View viewDetailErr;
+    String err = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +89,14 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
         notification = new ViewDialogForNotification();
         tvNameStory = (TextView) findViewById(R.id.tvNameStory);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+        viewDetailErr = findViewById(R.id.view_detail_err);
+        viewDetailErr.setVisibility(View.GONE);
+        tvDetailErr = (TextView) findViewById(R.id.tv_detail_err);
+        btnOK = (Button) findViewById(R.id.btnOK);
+        btnDetail = (Button) findViewById(R.id.btnDetailErr);
+        btnDetail.setVisibility(View.GONE);
 
-        actionBar.eventToolbar(this, titleChapter, true);
+        actionBar.eventToolbar(this, titleChapter, false);
         listRule = new ArrayList<>();
         listRule.add(new Rule1());
         listRule.add(new Rule2());
@@ -112,25 +120,29 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
         tvReading.setText(detailReading);
         Log.d("scroll", String.valueOf(scrollView.getChildAt(0).getHeight()));
         Log.d("heightText", String.valueOf(getTextHeight(tvReading)) + " and " + String.valueOf(getScreenHeight())
-         + " num " + String.valueOf(numPage(getTextHeight(tvReading), getScreenHeight() - 480)));
+                + " num " + String.valueOf(numPage(getTextHeight(tvReading), getScreenHeight() - 480)));
 
         showErr = (Button) findViewById(R.id.btnShowErr);
         showErr.setText("Error");
         showErr.setOnClickListener(this);
+        btnOK.setOnClickListener(this);
+        btnDetail.setOnClickListener(this);
     }
 
     /**
      * Lấy độ cao của textview
+     *
      * @param text
      * @return
      */
-    private int getTextHeight( TextView text){
+    private int getTextHeight(TextView text) {
         text.measure(0, 0);
-        return  text.getMeasuredHeight();
+        return text.getMeasuredHeight();
     }
 
     /**
      * Lấy độ cao của màn hình thiết bị
+     *
      * @return
      */
     private int getScreenHeight() {
@@ -140,6 +152,7 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
 
     /**
      * Lấy chiều rộng của thiết bị
+     *
      * @return
      */
     private int getScreenWidth() {
@@ -149,14 +162,15 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
 
     /**
      * Số trang của văn bản
-     * @param textHeight chiều cao textview
+     *
+     * @param textHeight   chiều cao textview
      * @param screenHeight chiều cao màn hình
      * @return mỗi màn hình là 1 trang, dựa vào height xác định số trang của văn bản
      */
-    private int numPage(int textHeight, int screenHeight){
+    private int numPage(int textHeight, int screenHeight) {
         int num = 0;
         num = textHeight / screenHeight;
-        if(textHeight > screenHeight * num){
+        if (textHeight > screenHeight * num) {
             num += 1;
         }
         return num;
@@ -165,36 +179,39 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v == showErr) {
-            if (showErr.getText().toString().equals("Error")) {
-                splitText = new SplitText(detailReading.toLowerCase());
-                listText = splitText.splitSentences();
+            lsError = new ArrayList<>();
+            listText = new ArrayList<>();
+            btnDetail.setVisibility(View.VISIBLE);
+            viewDetailErr.setVisibility(View.GONE);
 
-                for (int i = 0; i < listText.size(); i++) {
-                    for (int k = 0; k < listRule.size(); k++) {
-                        if (listRule.get(k).checkInvalidate(listText.get(i))) {
-                            numOfErr++;
-                            Log.d("thang", "Từ này sai ở luật thứ " + (k + 1)
-                                    + " " + listText.get(i) + " " + listRule.get(k).getClass().getSimpleName());
-                            lsError.add(listText.get(i));
-                            break;
-                        }
+            splitText = new SplitText(detailReading.toLowerCase());
+            listText = splitText.splitSentences();
+
+            for (int i = 0; i < listText.size(); i++) {
+                for (int k = 0; k < listRule.size(); k++) {
+                    if (listRule.get(k).checkInvalidate(listText.get(i))) {
+                        numOfErr++;
+                        Log.d("thang", "Từ này sai ở luật thứ " + (k + 1)
+                                + " " + listText.get(i) + " " + listRule.get(k).getClass().getSimpleName());
+                        err += listText.get(i) + ", ";
+                        lsError.add(listText.get(i));
+                        break;
                     }
                 }
-
-                notification.showDialog(ViewReading.this, "Thông báo",
-                        "Số lỗi của chương này là " + String.valueOf(numOfErr), R.drawable.tick_box_icon);
-
-                showErr.setText("Detail");
             }
-            if (showErr.getText().toString().equals("Detail")){
 
-            }
-//            for (int i = 0; i < lsError.size(); i++) {
-//                Log.d("loi", "onClick: " + lsError.get(i));
-//                detailReadingHtml = detailReadingHtml.replaceAll(lsError.get(i).toLowerCase(),
-//                        "<font color='red'>" + lsError.get(i).toLowerCase() + "</font>");
-//                tvReading.setText(Html.fromHtml(detailReadingHtml));
-//            }
+            notification.showDialog(ViewReading.this, "Thông báo",
+                    "Số lỗi của chương này là " + String.valueOf(numOfErr), R.drawable.check_button);
+        }
+        if (v == btnDetail) {
+            showErr.setVisibility(View.GONE);
+            viewDetailErr.setVisibility(View.VISIBLE);
+            tvDetailErr.setText(err);
+        }
+        if (v == btnOK) {
+            viewDetailErr.setVisibility(View.GONE);
+            btnDetail.setVisibility(View.GONE);
+            showErr.setVisibility(View.VISIBLE);
         }
     }
 }

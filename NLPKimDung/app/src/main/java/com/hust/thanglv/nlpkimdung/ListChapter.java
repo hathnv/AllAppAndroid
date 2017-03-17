@@ -181,7 +181,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    tvStory.setText(result.get(0));
+                    edPassage.setText(result.get(0));
                 }
                 break;
             }

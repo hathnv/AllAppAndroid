@@ -75,8 +75,8 @@ public class ResultSearchAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             if(view == itemView) {
-                Intent intent = new Intent(activity, ViewReading.class);
-                activity.startActivity(intent);
+//                Intent intent = new Intent(activity, ViewReading.class);
+//                activity.startActivity(intent);
             }
         }
     }

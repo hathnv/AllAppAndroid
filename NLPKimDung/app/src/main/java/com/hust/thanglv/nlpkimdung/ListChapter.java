@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ListChapter extends AppCompatActivity implements View.OnClickListener{
+public class ListChapter extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView listChapter, listResultSearch;
     private ArrayList<Chapter> chapters;
     private ChapterAdapter adapter;
@@ -58,7 +58,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
     /**
      * Lấy dữ liệu thông qua intent
      */
-    private void getDataFromIntent(){
+    private void getDataFromIntent() {
         titleStory = getIntent().getStringExtra("titleStory");
         idStory = getIntent().getIntExtra("idStory", -1);
     }
@@ -66,7 +66,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
     /**
      * Khai báo các view và khởi tạo giá trị
      */
-    private void init(){
+    private void init() {
         actionBar = new CustomActionBar();
 
         actionBar.eventToolbar(this, titleStory, true);
@@ -101,50 +101,82 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         layoutSearchVoice.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v == imSearch){
-            view_dialog_search.setVisibility(View.VISIBLE);
-        }
-        if(v == btnCancel ){
-            view_dialog_search.setVisibility(View.GONE);
-        }
-        if(v == btnClose){
-            view_result_search.setVisibility(View.GONE);
-        }
-        // xử lý sự kiện khi click vào btn search
-        // hiển thị view để tìm kiếm
-        if(v == btnSearch){
-            String textSearch = edPassage.getText().toString().toLowerCase();
-            resultSearchs = new ArrayList<>();
+    /**
+     * Hàm tìm kiếm trong cả bộ truyện
+     * @param textSearch
+     */
+    private void searchText(String textSearch){
+        resultSearchs = new ArrayList<>();
 
-            for(int i = 0; i < chapters.size(); i++){
-                String content = String.valueOf(Html.fromHtml(chapters.get(i).getContent().toLowerCase()));
-                if(chapters.get(i).getContent().toLowerCase().contains(textSearch)){
-                    resultSearch = new ResultSearchModel("Chương " + String.valueOf(i + 1), content.substring(content
-                            .indexOf(textSearch), content
-                            .indexOf(textSearch) + + textSearch.length() + 50));
+        for(int i = 0; i < chapters.size(); i++){
+            ArrayList<Integer> positions = new ArrayList();
+            String content = String.valueOf(Html.fromHtml(chapters.get(i).getContent().toLowerCase()));
+
+            if(content.contains(textSearch)){
+
+                int index = content.indexOf(textSearch);
+
+                // Duyệt tất cả các vị trí xuất hiện textSearch
+                while (index >= 0) {
+                    positions.add(index);
+                    index = content.indexOf(textSearch, index + 1);
+                }
+
+                for (int p : positions) {
+                    Log.d("position", String.valueOf(p) + " " );
+                    String s = "";
+                    if(content.length() - p - textSearch.length() < 50) {
+                        s = content.substring(p, content.length());
+                    }else {
+                        s = content.substring(p, p + textSearch.length() + 50);
+                    }
+                    Log.d("timchu", String.valueOf(p) + " " + s);
+                    resultSearch = new ResultSearchModel("Chương " + String.valueOf(i + 1), s);
                     resultSearchs.add(resultSearch);
                     Log.d("findtext", resultSearch.getChapter() + resultSearch.getContent());
                 }
             }
-            Log.d("result", String.valueOf(resultSearchs.size()));
 
-            if (resultSearchs.size() == 0){
-                Toast.makeText(getApplicationContext(), "can't find text", Toast.LENGTH_LONG).show();
-                view_dialog_search.setVisibility(View.GONE);
+        }
+        Log.d("result", String.valueOf(resultSearchs.size()));
+
+        if (resultSearchs.size() == 0) {
+            Toast.makeText(getApplicationContext(), "can't find text", Toast.LENGTH_LONG).show();
+            view_dialog_search.setVisibility(View.GONE);
+        } else {
+            view_result_search.setVisibility(View.VISIBLE);
+            searchAdapter = new ResultSearchAdapter(ListChapter.this, resultSearchs);
+            LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+
+            listResultSearch.setLayoutManager(mLinearLayoutManager);
+            listResultSearch.setAdapter(searchAdapter);
+
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == imSearch) {
+            view_dialog_search.setVisibility(View.VISIBLE);
+        }
+        if (v == btnCancel) {
+            view_dialog_search.setVisibility(View.GONE);
+        }
+        if (v == btnClose) {
+            view_result_search.setVisibility(View.GONE);
+        }
+        // xử lý sự kiện khi click vào btn search
+        // hiển thị view để tìm kiếm
+        if (v == btnSearch) {
+            String textSearch = edPassage.getText().toString().toLowerCase();
+            if(textSearch.length() == 0){
+                Toast.makeText(getApplicationContext(), "Nhập vào từ cần tìm", Toast.LENGTH_LONG).show();
             }else {
-                view_result_search.setVisibility(View.VISIBLE);
-                searchAdapter = new ResultSearchAdapter(ListChapter.this, resultSearchs);
-                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-
-                listResultSearch.setLayoutManager(mLinearLayoutManager);
-                listResultSearch.setAdapter(searchAdapter);
-
+                searchText(textSearch);
             }
         }
 
-        if (v == layoutSearchVoice){
+        if (v == layoutSearchVoice) {
             /*
             search voice Chức năng tìm kiếm bằng giọng nói
              */
@@ -154,7 +186,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
 
     /**
      * Showing google speech input dialog
-     * */
+     */
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

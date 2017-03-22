@@ -17,17 +17,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="60dp"
+
             android:background="#8000">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_chapter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="60dp"
                 android:padding="20dp">
 
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </RelativeLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp">
+        <Button
+            android:id="@+id/btnShowAllErr"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/fab_button"
+            android:fontFamily="sans-serif"
+            android:shadowColor="@color/white"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="4"
+            android:text="Error"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btnDetailAllErr"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/fab_button"
+            android:fontFamily="sans-serif"
+            android:shadowColor="@color/white"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="4"
+            android:text="Detail"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+    </FrameLayout>
     <include
         android:id="@+id/view_dialog_search"
         layout="@layout/view_dialog_search"
@@ -36,5 +72,14 @@
         android:id="@+id/view_result_search"
         layout="@layout/view_result_search"
         android:visibility="gone" />
+    <include
+        android:id="@+id/view_dialog"
+        layout="@layout/view_dialog_search"
+        android:visibility="gone" />
+    <include
+        android:id="@+id/view_detail_err"
+        layout="@layout/view_detail_err"
+        android:visibility="gone"
+        />
 
 </FrameLayout>

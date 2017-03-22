@@ -179,8 +179,10 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v == showErr) {
+            err = "";
             lsError = new ArrayList<>();
             listText = new ArrayList<>();
+            numOfErr = 0;
             btnDetail.setVisibility(View.VISIBLE);
             viewDetailErr.setVisibility(View.GONE);
 

@@ -20,12 +20,33 @@ import android.widget.Toast;
 import com.hust.thanglv.nlpkimdung.adapter.ChapterAdapter;
 import com.hust.thanglv.nlpkimdung.adapter.ResultSearchAdapter;
 import com.hust.thanglv.nlpkimdung.customize.CustomActionBar;
+import com.hust.thanglv.nlpkimdung.customize.ViewDialogForNotification;
 import com.hust.thanglv.nlpkimdung.databases.DatabaseHelper;
 import com.hust.thanglv.nlpkimdung.model.Chapter;
 import com.hust.thanglv.nlpkimdung.model.ResultSearchModel;
+import com.hust.thanglv.nlpkimdung.model.SplitText;
+import com.hust.thanglv.nlpkimdung.rules.CacPhuAmNamCuoi;
+import com.hust.thanglv.nlpkimdung.rules.CheckC;
+import com.hust.thanglv.nlpkimdung.rules.CheckH;
+import com.hust.thanglv.nlpkimdung.rules.CheckK;
+import com.hust.thanglv.nlpkimdung.rules.CheckP;
+import com.hust.thanglv.nlpkimdung.rules.CheckPhuAmGanNhau;
+import com.hust.thanglv.nlpkimdung.rules.CheckQ;
+import com.hust.thanglv.nlpkimdung.rules.CheckS;
+import com.hust.thanglv.nlpkimdung.rules.CheckT;
+import com.hust.thanglv.nlpkimdung.rules.CheckTr;
+import com.hust.thanglv.nlpkimdung.rules.Rule;
+import com.hust.thanglv.nlpkimdung.rules.Rule1;
+import com.hust.thanglv.nlpkimdung.rules.Rule2;
+import com.hust.thanglv.nlpkimdung.rules.Rule3;
+import com.hust.thanglv.nlpkimdung.rules.Rule4;
+import com.hust.thanglv.nlpkimdung.rules.Rule5;
+import com.hust.thanglv.nlpkimdung.rules.Rule6;
+import com.hust.thanglv.nlpkimdung.rules.Rule7;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class ListChapter extends AppCompatActivity implements View.OnClickListener {
@@ -38,14 +59,22 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
     private String titleStory;
     private int idStory;
     private ImageView imSearch, btnClose;
-    private Button btnCancel, btnSearch;
-    private TextView tvStory;
+    private Button btnCancel, btnSearch, btnShowAllErr, btnDetailAllErr;
+    private TextView tvStory, tvDetailErr;
     private EditText edPassage;
     private View view_dialog_search, view_result_search;
     private ArrayList<ResultSearchModel> resultSearchs;
     private ResultSearchModel resultSearch;
     private LinearLayout layoutSearchVoice;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    private List<Rule> listRule;
+    private List<String> lsError;
+    private SplitText splitText;
+    private List<String> listText;
+    private int numOfErr = 0;
+    private ViewDialogForNotification notification;
+    String err = "";
+    private View viewDetailErr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +97,37 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
      */
     private void init() {
         actionBar = new CustomActionBar();
+        listRule = new ArrayList<>();
+        listRule.add(new Rule1());
+        listRule.add(new Rule2());
+        listRule.add(new Rule3());
+        listRule.add(new Rule4());
+        listRule.add(new Rule5());
+        listRule.add(new Rule6());
+        listRule.add(new Rule7());
+        listRule.add(new CheckC());
+        listRule.add(new CheckH());
+        listRule.add(new CacPhuAmNamCuoi());
+        listRule.add(new CheckK());
+        listRule.add(new CheckP());
+        listRule.add(new CheckPhuAmGanNhau());
+        listRule.add(new CheckQ());
+        listRule.add(new CheckS());
+        listRule.add(new CheckT());
+        listRule.add(new CheckTr());
 
         actionBar.eventToolbar(this, titleStory, true);
         listChapter = (RecyclerView) findViewById(R.id.list_chapter);
         listResultSearch = (RecyclerView) findViewById(R.id.listResultSearch);
+        notification = new ViewDialogForNotification();
+        viewDetailErr = findViewById(R.id.view_detail_err);
+        viewDetailErr.setVisibility(View.GONE);
+        tvDetailErr = (TextView) findViewById(R.id.tv_detail_err);
 
         btnSearch = (Button) findViewById(R.id.btnSearch);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+        btnShowAllErr = (Button) findViewById(R.id.btnShowAllErr);
+        btnDetailAllErr = (Button) findViewById(R.id.btnDetailAllErr);
         tvStory = (TextView) findViewById(R.id.tvStory);
         edPassage = (EditText) findViewById(R.id.edPassage);
         view_dialog_search = findViewById(R.id.view_dialog_search);
@@ -98,6 +151,8 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         btnCancel.setOnClickListener(this);
         btnSearch.setOnClickListener(this);
         btnClose.setOnClickListener(this);
+        btnDetailAllErr.setOnClickListener(this);
+        btnShowAllErr.setOnClickListener(this);
         layoutSearchVoice.setOnClickListener(this);
     }
 
@@ -164,6 +219,42 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         }
         if (v == btnClose) {
             view_result_search.setVisibility(View.GONE);
+        }
+        if(v == btnShowAllErr){
+            String content = "";
+            for(int i = 0; i < chapters.size(); i++) {
+                content += String.valueOf(Html.fromHtml(chapters.get(i).getContent().toLowerCase()));
+            }
+            err = "";
+            lsError = new ArrayList<>();
+            listText = new ArrayList<>();
+            numOfErr = 0;
+            btnDetailAllErr.setVisibility(View.VISIBLE);
+            viewDetailErr.setVisibility(View.GONE);
+
+            splitText = new SplitText(content.toLowerCase());
+            listText = splitText.splitSentences();
+
+            for (int i = 0; i < listText.size(); i++) {
+                for (int k = 0; k < listRule.size(); k++) {
+                    if (listRule.get(k).checkInvalidate(listText.get(i))) {
+                        numOfErr++;
+                        Log.d("thang", "Từ này sai ở luật thứ " + (k + 1)
+                                + " " + listText.get(i) + " " + listRule.get(k).getClass().getSimpleName());
+                        err += listText.get(i) + ", ";
+                        lsError.add(listText.get(i));
+                        break;
+                    }
+                }
+            }
+
+            notification.showDialog(ListChapter.this, "Thông báo",
+                    "Số lỗi của truyện này là " + String.valueOf(numOfErr), R.drawable.check_button);
+        }
+        if (v == btnDetailAllErr){
+            btnShowAllErr.setVisibility(View.GONE);
+            viewDetailErr.setVisibility(View.VISIBLE);
+            tvDetailErr.setText(err);
         }
         // xử lý sự kiện khi click vào btn search
         // hiển thị view để tìm kiếm

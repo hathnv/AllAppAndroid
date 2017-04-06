@@ -57,7 +57,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
     private String titleStory;
     private int idStory;
     private ImageView imSearch, btnClose;
-    private Button btnCancel, btnSearch, btnShowAllErr, btnDetailAllErr;
+    private Button btnCancel, btnSearch, btnShowAllErr, btnDetailAllErr, btnOK;
     private TextView tvStory, tvDetailErr;
     private EditText edPassage;
     private View view_dialog_search, view_result_search;
@@ -137,6 +137,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         chapters = databaseHelper.getListChapter(idStory);
         imSearch = (ImageView) findViewById(R.id.imSearch);
         btnClose = (ImageView) findViewById(R.id.btnClose);
+        btnOK = (Button) findViewById(R.id.btnOK);
         tvStory.setText(titleStory);
 
         adapter = new ChapterAdapter(ListChapter.this, chapters);
@@ -151,6 +152,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         btnDetailAllErr.setOnClickListener(this);
         btnShowAllErr.setOnClickListener(this);
         layoutSearchVoice.setOnClickListener(this);
+        btnOK.setOnClickListener(this);
     }
 
     /**
@@ -252,6 +254,9 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
             btnShowAllErr.setVisibility(View.GONE);
             viewDetailErr.setVisibility(View.VISIBLE);
             tvDetailErr.setText(err);
+        }
+        if(v == btnOK){
+            viewDetailErr.setVisibility(View.GONE);
         }
         // xử lý sự kiện khi click vào btn search
         // hiển thị view để tìm kiếm

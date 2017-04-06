@@ -3,7 +3,6 @@ package com.hust.thanglv.nlpkimdung.databases;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 
 import com.hust.thanglv.nlpkimdung.model.Chapter;
 import com.hust.thanglv.nlpkimdung.model.Story;

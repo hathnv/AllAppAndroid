@@ -1,19 +1,11 @@
 package com.hust.thanglv.nlpkimdung;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,7 +20,6 @@ import com.hust.thanglv.nlpkimdung.rules.CheckK;
 import com.hust.thanglv.nlpkimdung.rules.CheckP;
 import com.hust.thanglv.nlpkimdung.rules.CheckPhuAmGanNhau;
 import com.hust.thanglv.nlpkimdung.rules.CheckQ;
-import com.hust.thanglv.nlpkimdung.rules.CheckS;
 import com.hust.thanglv.nlpkimdung.rules.CheckT;
 import com.hust.thanglv.nlpkimdung.rules.CheckTr;
 import com.hust.thanglv.nlpkimdung.rules.Rule;
@@ -40,14 +31,8 @@ import com.hust.thanglv.nlpkimdung.rules.Rule5;
 import com.hust.thanglv.nlpkimdung.rules.Rule6;
 import com.hust.thanglv.nlpkimdung.rules.Rule7;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 public class ViewReading extends AppCompatActivity implements View.OnClickListener {
     private TextView tvReading;
@@ -112,7 +97,6 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
         listRule.add(new CheckP());
         listRule.add(new CheckPhuAmGanNhau());
         listRule.add(new CheckQ());
-        listRule.add(new CheckS());
         listRule.add(new CheckT());
         listRule.add(new CheckTr());
 

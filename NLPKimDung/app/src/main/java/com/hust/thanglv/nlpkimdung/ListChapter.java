@@ -32,7 +32,6 @@ import com.hust.thanglv.nlpkimdung.rules.CheckK;
 import com.hust.thanglv.nlpkimdung.rules.CheckP;
 import com.hust.thanglv.nlpkimdung.rules.CheckPhuAmGanNhau;
 import com.hust.thanglv.nlpkimdung.rules.CheckQ;
-import com.hust.thanglv.nlpkimdung.rules.CheckS;
 import com.hust.thanglv.nlpkimdung.rules.CheckT;
 import com.hust.thanglv.nlpkimdung.rules.CheckTr;
 import com.hust.thanglv.nlpkimdung.rules.Rule;
@@ -44,7 +43,6 @@ import com.hust.thanglv.nlpkimdung.rules.Rule5;
 import com.hust.thanglv.nlpkimdung.rules.Rule6;
 import com.hust.thanglv.nlpkimdung.rules.Rule7;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -112,7 +110,6 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         listRule.add(new CheckP());
         listRule.add(new CheckPhuAmGanNhau());
         listRule.add(new CheckQ());
-        listRule.add(new CheckS());
         listRule.add(new CheckT());
         listRule.add(new CheckTr());
 

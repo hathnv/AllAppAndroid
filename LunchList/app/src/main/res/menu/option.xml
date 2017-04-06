@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-    <item android:id="@+id/toast"
-        android:title="Thống kê"
-        android:orderInCategory="100"
-        android:icon="@drawable/more"
-        app:showAsAction="always|withText"
-        />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/toast"
+    android:title="Raise Toast"
+    android:icon="@drawable/apple"
+  />
+  <item android:id="@+id/run"
+    android:title="Run Long Task"
+    android:icon="@drawable/running"
+  />
 </menu>

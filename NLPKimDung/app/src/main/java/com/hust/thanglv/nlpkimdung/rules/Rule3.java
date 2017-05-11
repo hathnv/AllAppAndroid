@@ -1,9 +1,5 @@
 package com.hust.thanglv.nlpkimdung.rules;
 
-/**
- * Created by giang on 11/30/2016.
- */
-
 public class Rule3 extends Rule{
 	/*
 	 * Từ tiếng Việt bị giới hạn về số lượng chữ cái bên trong.

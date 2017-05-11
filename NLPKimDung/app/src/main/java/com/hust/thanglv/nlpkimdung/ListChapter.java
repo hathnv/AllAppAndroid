@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hust.thanglv.nlpkimdung.Anim.Animation;
 import com.hust.thanglv.nlpkimdung.adapter.ChapterAdapter;
 import com.hust.thanglv.nlpkimdung.adapter.ResultSearchAdapter;
 import com.hust.thanglv.nlpkimdung.customize.CustomActionBar;
@@ -32,6 +33,7 @@ import com.hust.thanglv.nlpkimdung.rules.CheckK;
 import com.hust.thanglv.nlpkimdung.rules.CheckP;
 import com.hust.thanglv.nlpkimdung.rules.CheckPhuAmGanNhau;
 import com.hust.thanglv.nlpkimdung.rules.CheckQ;
+import com.hust.thanglv.nlpkimdung.rules.CheckS;
 import com.hust.thanglv.nlpkimdung.rules.CheckT;
 import com.hust.thanglv.nlpkimdung.rules.CheckTr;
 import com.hust.thanglv.nlpkimdung.rules.Rule;
@@ -112,6 +114,7 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         listRule.add(new CheckQ());
         listRule.add(new CheckT());
         listRule.add(new CheckTr());
+        listRule.add(new CheckS());
 
         actionBar.eventToolbar(this, titleStory, true);
         listChapter = (RecyclerView) findViewById(R.id.list_chapter);
@@ -182,10 +185,14 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
                     if(content.length() - p - textSearch.length() < 50) {
                         s = content.substring(p, content.length());
                     }else {
-                        s = content.substring(p, p + textSearch.length() + 50);
+                        if(p > 10) {
+                            s = content.substring(p - 10, p + textSearch.length() + 50);
+                        }else {
+                            s = content.substring(p, p + textSearch.length() + 50);
+                        }
                     }
                     Log.d("timchu", String.valueOf(p) + " " + s);
-                    resultSearch = new ResultSearchModel("Chương " + String.valueOf(i + 1), s);
+                    resultSearch = new ResultSearchModel(chapters.get(i), s, p, "Chương " + String.valueOf(i + 1), textSearch);
                     resultSearchs.add(resultSearch);
                     Log.d("findtext", resultSearch.getChapter() + resultSearch.getContent());
                 }
@@ -246,7 +253,6 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
                     }
                 }
             }
-
             notification.showDialog(ListChapter.this, "Thông báo",
                     "Số lỗi của truyện này là " + String.valueOf(numOfErr), R.drawable.check_button);
         }
@@ -261,12 +267,14 @@ public class ListChapter extends AppCompatActivity implements View.OnClickListen
         // xử lý sự kiện khi click vào btn search
         // hiển thị view để tìm kiếm
         if (v == btnSearch) {
+
             String textSearch = edPassage.getText().toString().toLowerCase();
             if(textSearch.length() == 0){
                 Toast.makeText(getApplicationContext(), "Nhập vào từ cần tìm", Toast.LENGTH_LONG).show();
             }else {
                 searchText(textSearch);
             }
+
         }
 
         if (v == layoutSearchVoice) {

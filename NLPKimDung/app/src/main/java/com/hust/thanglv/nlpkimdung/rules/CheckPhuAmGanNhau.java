@@ -1,8 +1,5 @@
 package com.hust.thanglv.nlpkimdung.rules;
 
-/**
- * Created by LeHuyen on 11/30/2016.
- */
 
 public class CheckPhuAmGanNhau extends Rule{
 

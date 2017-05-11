@@ -1,9 +1,5 @@
 package com.hust.thanglv.nlpkimdung.rules;
 
-/**
- * Created by LeHuyen on 11/30/2016.
- */
-
 public class CheckQ extends Rule {
 
     @Override
@@ -14,7 +10,6 @@ public class CheckQ extends Rule {
                 check = true;
             }
         }
-
         return check;
     }
 }

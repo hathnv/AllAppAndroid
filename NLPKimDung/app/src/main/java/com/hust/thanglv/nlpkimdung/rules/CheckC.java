@@ -1,9 +1,5 @@
 package com.hust.thanglv.nlpkimdung.rules;
 
-/**
- * Created by giang on 12/1/2016.
- */
-
 public class CheckC extends Rule {
     @Override
     public boolean checkInvalidate(String x) {

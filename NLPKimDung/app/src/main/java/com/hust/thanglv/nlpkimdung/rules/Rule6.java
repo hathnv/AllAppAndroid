@@ -3,10 +3,6 @@ package com.hust.thanglv.nlpkimdung.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by giang on 11/30/2016.
- */
-
 public class Rule6 extends Rule {
 	/*
 	 * check g

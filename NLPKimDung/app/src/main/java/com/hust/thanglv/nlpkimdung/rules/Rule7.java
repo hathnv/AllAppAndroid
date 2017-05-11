@@ -3,10 +3,6 @@ package com.hust.thanglv.nlpkimdung.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by giang on 11/30/2016.
- */
-
 public class Rule7 extends Rule {
     /*
 	 * Check nếu có 2 nguyên âm giống hệt nhau đứng cạnh nhau (trừ oo)
@@ -14,7 +10,7 @@ public class Rule7 extends Rule {
 
     @Override
     public boolean checkInvalidate(String x) {
-        String consolnant = "qrtpsdghklxcvbnm đ";
+        String consolnant = "qrtpsdghklxcvbnmđ";
         List<Integer> list = new ArrayList<>(); // list chi so nguyen am
         x = x.toLowerCase();
         for (int i = 0; i < x.length(); i++) {

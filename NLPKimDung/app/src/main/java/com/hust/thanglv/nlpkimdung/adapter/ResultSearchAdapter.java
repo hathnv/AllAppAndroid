@@ -3,6 +3,7 @@ package com.hust.thanglv.nlpkimdung.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class ResultSearchAdapter extends RecyclerView.Adapter {
     private ArrayList<ResultSearchModel> resultSearchModels;
     private Activity activity;
+    private int pos;
     private View view;
 
     public ResultSearchAdapter(Activity activity, ArrayList<ResultSearchModel> resultSearchModels) {
@@ -42,7 +44,7 @@ public class ResultSearchAdapter extends RecyclerView.Adapter {
         if (holder instanceof SearchHolder) {
             SearchHolder searchHolder = (SearchHolder) holder;
 
-            searchHolder.tvChapter.setText(resultSearchModels.get(position).getChapter());
+            searchHolder.tvChapter.setText(resultSearchModels.get(position).getNumChapter());
             searchHolder.tvContent.setText(resultSearchModels.get(position).getContent());
         }
 
@@ -75,8 +77,16 @@ public class ResultSearchAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             if(view == itemView) {
-//                Intent intent = new Intent(activity, ViewReading.class);
-//                activity.startActivity(intent);
+                Intent intent = new Intent(activity, ViewReading.class);
+                intent.putExtra("offset", resultSearchModels.get(getAdapterPosition())
+                        .getPosSearchText());
+                intent.putExtra("titleChapter", resultSearchModels.get(getAdapterPosition())
+                        .getChapter().getTitle());
+                intent.putExtra("content", resultSearchModels.get(getAdapterPosition())
+                        .getChapter().getContent());
+                intent.putExtra("search", resultSearchModels.get(getAdapterPosition())
+                        .getTextSearch());
+                activity.startActivity(intent);
             }
         }
     }

@@ -7,7 +7,7 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="45dp">
+    android:layout_marginBottom="70dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_marginTop="60dp"
@@ -30,7 +30,7 @@
         android:id="@+id/btnOK"
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="10dp"
@@ -38,5 +38,6 @@
         android:text="OK"
         android:clickable="true"
         android:textAllCaps="false"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bg_btn"/>
 </RelativeLayout>

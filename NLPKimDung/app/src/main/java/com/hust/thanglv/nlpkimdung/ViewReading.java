@@ -3,13 +3,17 @@ package com.hust.thanglv.nlpkimdung;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 
+import com.hust.thanglv.nlpkimdung.Anim.Animation;
 import com.hust.thanglv.nlpkimdung.customize.CustomActionBar;
 import com.hust.thanglv.nlpkimdung.customize.ViewDialogForNotification;
 import com.hust.thanglv.nlpkimdung.model.SplitText;
@@ -20,6 +24,7 @@ import com.hust.thanglv.nlpkimdung.rules.CheckK;
 import com.hust.thanglv.nlpkimdung.rules.CheckP;
 import com.hust.thanglv.nlpkimdung.rules.CheckPhuAmGanNhau;
 import com.hust.thanglv.nlpkimdung.rules.CheckQ;
+import com.hust.thanglv.nlpkimdung.rules.CheckS;
 import com.hust.thanglv.nlpkimdung.rules.CheckT;
 import com.hust.thanglv.nlpkimdung.rules.CheckTr;
 import com.hust.thanglv.nlpkimdung.rules.Rule;
@@ -38,9 +43,9 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
     private TextView tvReading;
     private String titleChapter, detailReadingHtml, detailReading;
     private CustomActionBar actionBar;
-    private Button showErr, btnOK, btnDetail;
+    private Button showErr, btnOK, btnDetail, btnPos;
     private List<Rule> listRule;
-    private String errorWords = "";
+    private String search;
     private List<String> lsError;
     private SplitText splitText;
     private List<String> listText;
@@ -49,8 +54,9 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
     private TextView tvNameStory, tvDetailErr;
     private ScrollView scrollView;
     private final DisplayMetrics dm = new DisplayMetrics();
-    private View viewDetailErr;
+    private View viewDetailErr, viewPos;
     String err = "";
+    int offset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,8 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
     private void getDataFromIntent() {
         titleChapter = getIntent().getStringExtra("titleChapter");
         detailReadingHtml = getIntent().getStringExtra("content");
+        search = getIntent().getStringExtra("search");
+        offset = getIntent().getIntExtra("offset", -1);
     }
 
     private void init() {
@@ -79,6 +87,13 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
         tvDetailErr = (TextView) findViewById(R.id.tv_detail_err);
         btnOK = (Button) findViewById(R.id.btnOK);
         btnDetail = (Button) findViewById(R.id.btnDetailErr);
+        btnPos = (Button) findViewById(R.id.btnPos);
+        viewPos = findViewById(R.id.view_pos);
+        if(offset > 0){
+            viewPos.setVisibility(View.VISIBLE);
+        }else {
+            viewPos.setVisibility(View.GONE);
+        }
         btnDetail.setVisibility(View.GONE);
 
         actionBar.eventToolbar(this, titleChapter, false);
@@ -99,6 +114,29 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
         listRule.add(new CheckQ());
         listRule.add(new CheckT());
         listRule.add(new CheckTr());
+        listRule.add(new CheckS());
+
+//        String x = "98abc";
+        ArrayList<String> test = new ArrayList<>();
+        test.add("yin");
+        test.add("yun");
+        test.add("nguyễ");
+        test.add("nguyễn");
+        test.add("xuâ");
+        test.add("xuânh");
+        test.add("tâ");
+        test.add("huỳnh");
+        test.add("êch");
+        test.add("giach");
+
+        for(int i = 0; i < test.size(); i++) {
+            for (int k = 0; k < listRule.size(); k++) {
+                Log.d("error ", "123");
+                if (listRule.get(k).checkInvalidate(test.get(i))) {
+                    Log.d("error1 ", test.get(i));
+                }
+            }
+        }
 
         tvReading = (TextView) findViewById(R.id.tvDetailReading);
         tvReading.setText(detailReading);
@@ -111,6 +149,8 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
         showErr.setOnClickListener(this);
         btnOK.setOnClickListener(this);
         btnDetail.setOnClickListener(this);
+        btnPos.setOnClickListener(this);
+
     }
 
     /**
@@ -181,13 +221,17 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
                                 + " " + listText.get(i) + " " + listRule.get(k).getClass().getSimpleName());
                         err += listText.get(i) + ", ";
                         lsError.add(listText.get(i));
+
+                        detailReadingHtml = detailReadingHtml.replaceAll(listText.get(i),"<font color='red'>"+listText.get(i)+"</font>");
+
+                        tvReading.setText(Html.fromHtml(detailReadingHtml));
                         break;
                     }
                 }
             }
-
             notification.showDialog(ViewReading.this, "Thông báo",
                     "Số lỗi của chương này là " + String.valueOf(numOfErr), R.drawable.check_button);
+
         }
         if (v == btnDetail) {
             showErr.setVisibility(View.GONE);
@@ -198,6 +242,14 @@ public class ViewReading extends AppCompatActivity implements View.OnClickListen
             viewDetailErr.setVisibility(View.GONE);
             btnDetail.setVisibility(View.GONE);
             showErr.setVisibility(View.VISIBLE);
+        }
+        if(v == btnPos){
+            Log.d("offset", offset + "");
+            Layout layout = tvReading.getLayout();
+            scrollView.scrollTo(0, layout.getLineTop(tvReading.getTop() + layout.getLineForOffset(offset)));
+            detailReadingHtml = detailReadingHtml.replaceAll(search,"<font color='green'>"+search+"</font>");
+            tvReading.setText(Html.fromHtml(detailReadingHtml));
+            viewPos.setVisibility(View.GONE);
         }
     }
 }

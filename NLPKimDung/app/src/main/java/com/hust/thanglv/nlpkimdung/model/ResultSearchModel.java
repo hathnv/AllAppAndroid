@@ -5,22 +5,27 @@ package com.hust.thanglv.nlpkimdung.model;
  */
 
 public class ResultSearchModel {
-    private String chapter;
+    private Chapter chapter;
     private String content;
+    private String numChapter, textSearch;
+    int posSearchText;
 
     public ResultSearchModel() {
     }
 
-    public ResultSearchModel(String chapter, String content) {
+    public ResultSearchModel(Chapter chapter, String content, int searchText, String numChapter, String textSearch) {
         this.chapter = chapter;
         this.content = content;
+        this.posSearchText = searchText;
+        this.numChapter = numChapter;
+        this.textSearch = textSearch;
     }
 
-    public String getChapter() {
+    public Chapter getChapter() {
         return chapter;
     }
 
-    public void setChapter(String chapter) {
+    public void setChapter(Chapter chapter) {
         this.chapter = chapter;
     }
 
@@ -30,5 +35,29 @@ public class ResultSearchModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getPosSearchText() {
+        return posSearchText;
+    }
+
+    public void setPosSearchText(int posSearchText) {
+        this.posSearchText = posSearchText;
+    }
+
+    public String getNumChapter() {
+        return numChapter;
+    }
+
+    public void setNumChapter(String numChapter) {
+        this.numChapter = numChapter;
+    }
+
+    public String getTextSearch() {
+        return textSearch;
+    }
+
+    public void setTextSearch(String textSearch) {
+        this.textSearch = textSearch;
     }
 }

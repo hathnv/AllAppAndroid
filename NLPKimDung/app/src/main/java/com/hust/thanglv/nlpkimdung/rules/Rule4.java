@@ -1,8 +1,5 @@
 package com.hust.thanglv.nlpkimdung.rules;
 
-/**
- * Created by giang on 11/30/2016.
- */
 
 public class Rule4 extends Rule{
 	/*
@@ -11,7 +8,7 @@ public class Rule4 extends Rule{
 
     @Override
     public boolean checkInvalidate(String x) {
-        String consolnant = "qrtpsdghklxcvbnm đ";
+        String consolnant = "qrtpsdghklxcvbnmđ";
         int count = 0; // dem so phu am
         x = x.toLowerCase();
         for (int i = 0; i < x.length(); i++) {

@@ -1,16 +1,12 @@
 package com.hust.thanglv.nlpkimdung.rules;
 
-/**
- * Created by giang on 12/1/2016.
- */
-
 public class CheckK extends Rule {
     @Override
     public boolean checkInvalidate(String x) {
         boolean check = false;
         int length = x.length();
         if (length == 0) check = true;
-        String str = "eéẻẽẹêếểễệểiíịĩỉyýỷỹỵìỳ ề è";
+        String str = "eéẻẽẹêếểễệểiíịĩỉyýỷỹỵìỳềè";
         if(!x.contains('k' + "")) check = false;
         if (length >= 2) {
             if (x.charAt(0) == 'k') {

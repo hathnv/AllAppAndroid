@@ -1,12 +1,4 @@
 package com.hust.thanglv.nlpkimdung.rules;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by giang on 11/30/2016.
- */
-
 public class Rule5 extends Rule {
     /*
      * Từ tiếng Việt nếu có > 1 nguyên âm thì các nguyên âm này phải nằm cạnh

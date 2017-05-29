@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="vn.edu.hust.thanglv.drawsvgwithcanvas.MainActivity">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:layout_height="wrap_content">
+        <vn.edu.hust.thanglv.drawsvgwithcanvas.writer.SVGCanvasView
+            android:id="@+id/svg_kanji"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:layout_marginBottom="40dp"/>
+        <Button
+            android:id="@+id/btn"
+            android:background="@drawable/backgroud_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="bottom|right"
+            android:text="Vẽ lại" />
+    </android.support.v7.widget.CardView>
+</LinearLayout>
